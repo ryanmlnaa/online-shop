@@ -46,18 +46,9 @@
                             </address>
                         </li>
                         <li>
-                            <p>0846347253748</p>
-                        </li>
-                        <li>
-                            p984473627389
+                            <p></p>
                         </li>
                     </ul>
-                </div>
-                <div class="title-sosme">
-                    <i class="fa-brands fa-instagram"></i>
-                    <i class="fa-brands fa-facebook"></i>
-                    <i class="fa-brands fa-whatsapp"></i>
-                    <i class="fa-solid fa-link"></i>
                 </div>
             </div>
         </footer>

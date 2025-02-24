@@ -54,10 +54,7 @@
                     </ul>
                 </div>
                 <div class="title-sosme">
-                    <i class="fa-brands fa-instagram"></i>
-                    <i class="fa-brands fa-facebook"></i>
-                    <i class="fa-brands fa-whatsapp"></i>
-                    <i class="fa-solid fa-link"></i>
+                    <i class="fa fa-instag"></i>
                 </div>
             </div>
         </footer>
