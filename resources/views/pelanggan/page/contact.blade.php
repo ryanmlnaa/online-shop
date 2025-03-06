@@ -28,7 +28,7 @@
     </div>
 
     <h4 class="text-center mt-md-5 mb-md-2">Contact Us</h4>
-    <hr>
+    <hr class="mb-5">
     <div class="row mb-md-5">
         <div class="col-md-5">
             <div  class="bg-secondary" style="width:100%; height: 50vh; border-radius:10px;"></div>
@@ -47,11 +47,12 @@
     </div>
   </div>
   <div class="mb-3 row">
-    <label for="pesan" class="col-sm-2 col-form-label">Password</label>
+    <label for="pesan" class="col-sm-2 col-form-label">Pesan</label>
     <div class="col-sm-10">
       <input type="text" class="form-control" id="pesan" placeholder="Masukkan pesan Anda">
     </div>
   </div>
+  <button class="btn btn-primary mt-4 w-100">Kirim Pean Anda</button>
             </div>
         </div>
         </div>
