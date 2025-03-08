@@ -1,7 +1,7 @@
 <!-- Modal -->
 <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
-    <div class="modal-content ">
+    <div class="modal-content modal-md ">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="registerModalLabel">Register</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -23,7 +23,7 @@
   <div class="mb-3 row">
     <label for="Password" class="col-sm-3 col-form-label">Password <span style="color:red;">*</span></label>
     <div class="col-sm-9">
-      <input type="text" class="form-control" name= "Password"id="password" placeholder="Your Password">
+      <input type="password" class="form-control" name= "Password" id="password" placeholder="Your Password">
     </div>
   </div>
   <div class="mb-3 row">
@@ -47,7 +47,7 @@
   <div class="mb-5 row">
     <label for="date" class="col-sm-3 col-form-label">Date of birth <span style="color:red;">*</span></label>
     <div class="col-sm-9">
-      <input type="text" class="form-control" name="date" id="date"  placeholder="Input Phone Number">
+      <input type="date" class="form-control" name="date" id="date"  placeholder="Input Phone Number">
     </div>
   </div>
         <button type="button" class="btn btn-success col-sm-12">Login</button>
