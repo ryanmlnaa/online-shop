@@ -5,21 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class product extends Model
+class transaksi extends Model
 {
     use HasFactory;
-    protected $table = 'products';
+    protected $table = 'transkasis';
     public $timestamps = true;
     protected $fillable = [
-        'sku',
-        'nama_product',
-        'type',
-        'kategory',
-        'harga',
-        'discount',
-        'quantity',
-        'foto',
-        'is_active',
+       'code_transaksi',
+       'sku_transaksi',
+       'total_qty',
+       'total_harga',
+       'nama_customer',
+       'alamat',
+       'no_tlp',
+       'ekspedisi',
     ];
     protected $hidden;
     
