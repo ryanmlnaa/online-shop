@@ -20,7 +20,7 @@ return new class extends Migration
             $table->BigInteger('harga');
             $table->Float('discount');
             $table->Integer('quantity');
-            $table->Integer('foto');
+            $table->string('foto');
             $table->boolean('is_active')->default(1);
             $table->timestamps();
         });
