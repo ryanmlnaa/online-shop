@@ -31,3 +31,6 @@ Route::get('/admin/report', [Controller::class, 'report'])->name('report');
 Route::get('/admin/addModal', [productController::class, 'addModal'])->name('addModal');
 
 Route::POST('/admin/addData', [productController::class, 'store'])->name('addData');
+Route::get('/admin/editModal{id}/', [productController::class, 'show'])->name('editModal');
+Route::PUT('/admin/updateData/{id}', [ProductController::class, 'update'])->name('updateData');
+Route::DELETE('/admin/deleteData/{id}', [ProductController::class, 'destroy'])->name('deleteData');
