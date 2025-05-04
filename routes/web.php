@@ -32,10 +32,10 @@ Route::group(['middleware' => 'admin'], function(){
     Route::get('/admin/report', [Controller::class, 'report'])->name('report');
     Route::get('/admin/addModal', [productController::class, 'addModal'])->name('addModal');
 
-    Route::get('/admin/user_management', [UserController::class, 'index'])->name('userManagement');
-    Route::get('/admin/user_management/addModalUser', [UserController::class, 'addModalUser'])->name('addModalUser');
+    Route::GET('/admin/user_management', [UserController::class, 'index'])->name('userManagement');
+    Route::GET('/admin/user_management/addModalUser', [UserController::class, 'addModalUser'])->name('addModalUser');
     Route::POST('/admin/user_management/addData', [UserController::class, 'store'])->name('addDataUser');
-    Route::get('/admin/user_management/editUser/{id}', [UserController::class, 'show'])->name('ShowDataUser');
+    Route::get('/admin/user_management/editUser/{id}', [UserController::class, 'show'])->name('showDataUser');
     Route::PUT('/admin/user_management/updateDataUser/{id}', [UserController::class, 'update'])->name('updateDataUSer');
     Route::DELETE('/admin/user_management/deleteUSer/{id}', [UserController::class, 'destroy'])->name('destroyDataUser');
 
@@ -43,4 +43,8 @@ Route::group(['middleware' => 'admin'], function(){
     Route::get('/admin/editModal{id}/', [productController::class, 'show'])->name('editModal');
     Route::PUT('/admin/updateData/{id}', [ProductController::class, 'update'])->name('updateData');
     Route::DELETE('/admin/deleteData/{id}', [ProductController::class, 'destroy'])->name('deleteData');
+    Route::post('/predict-Gender', [ProductController::class, 'predictGender']);
+
+    Route::post('/predict-flask', [ProductController::class, 'predictFromFlask']);
+
 });

@@ -10,44 +10,59 @@
                 @csrf
                 <div class="modal-body">
                     <div class="mb-3 row">
-                        <label for="SKU" class="col-sm-5 col-form-label">SKU</label>
+                        <label for="product_id" class="col-sm-5 col-form-label">Kode Product</label>
                         <div class="col-sm-7">
-                            <input type="text" class="form-control-plaintext" id="SKU" name="sku"
-                                value="{{$sku}}" readonly>
+                            <input type="text" class="form-control-plaintext" id="product_id" name="product_id"
+                                value="{{ $product_id ?? '' }}" readonly>
                         </div>
                     </div>
                     <div class="mb-3 row">
-                        <label for="nameProduct" class="col-sm-5 col-form-label">Nama Product</label>
+                        <label for="product_name" class="col-sm-5 col-form-label">Nama Product</label>
                         <div class="col-sm-7">
-                            <input type="text" class="form-control" id="nameProduct" name="nama">
+                            <input type="text" class="form-control" id="product_name" name="product_name">
                         </div>
                     </div>
                     <div class="mb-3 row">
-                        <label for="type" class="col-sm-5 col-form-label">Type Product</label>
+                        <label for="product_brand" class="col-sm-5 col-form-label">Merk Product</label>
                         <div class="col-sm-7">
-                            <select type="text" class="form-control" id="type" name="type">
-                                <option value=""> Pilih Type </option>
-                                <option value="celana">Celana</option>
-                                <option value="baju">Baju</option>
-                                <option value="aksesoris">Aksesoris</option>
+                            <input type="text" class="form-control" id="product_brand" name="product_brand">
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="gender" class="col-sm-5 col-form-label">Jenis Kelamin</label>
+                        <div class="col-sm-7">
+                            <select class="form-control" id="jenis_kelamin" name="gender"> <!-- sebelumnya name="jenis_kelamin" -->
+                                <option value=""> Pilih Jenis Kelamin </option>
+                                <option value="Men">Men</option>
+                                <option value="Women">Women</option>
+                                <option value="Unisex">Unisex</option>
+                                <option value="Boys">Boys</option>
+                                <option value="Girls">Girls</option>
                             </select>
                         </div>
                     </div>
                     <div class="mb-3 row">
-                        <label for="kategori" class="col-sm-5 col-form-label">Kategori Product</label>
+                        <label for="price" class="col-sm-5 col-form-label">Harga</label>
                         <div class="col-sm-7">
-                            <select type="text" class="form-control" id="kategori" name="kategori">
-                                <option value=""> Pilih Kategori </option>
-                                <option value="Pria">Pria</option>
-                                <option value="Wanita">Wanita</option>
-                                <option value="Anak-anak">Anak-anak</option>
-                            </select>
+                            <input type="number" class="form-control" id="price" name="price">
                         </div>
                     </div>
                     <div class="mb-3 row">
-                        <label for="harga" class="col-sm-5 col-form-label">Harga Product</label>
+                        <label for="description" class="col-sm-5 col-form-label">Deskripsi</label>
                         <div class="col-sm-7">
-                            <input type="number" class="form-control" id="harga" name="harga">
+                            <input type="text" class="form-control" id="description" name="description">
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="primary_color" class="col-sm-5 col-form-label">Warna</label>
+                        <div class="col-sm-7">
+                            <input type="text" class="form-control" id="warna" name="primary_color"> <!-- sebelumnya name="warna" -->
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="jenis_pakaian" class="col-sm-5 col-form-label">Jenis Pakaian</label>
+                        <div class="col-sm-7">
+                            <input type="text" class="form-control" id="warna" name="jenis_pakaian"> <!-- sebelumnya name="warna" -->
                         </div>
                     </div>
                     <div class="mb-3 row">
@@ -77,6 +92,43 @@
     </div>
 </div>
 <script>
+     function fetchPredictionIfComplete() {
+        const pakaian = $('#jenis_pakaian').val();
+        const brand = $('#merk_product').val();
+        const color = $('#warna').val();
+
+        if (pakaian && brand && color) {
+            $.ajax({
+                url: '/predict-flask',
+                method: 'POST',
+                contentType: 'application/json',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                data: JSON.stringify({
+                    jenis_pakaian: pakaian,
+                    product_brand: brand,
+                    primary_color: color
+                }),
+                // dd($request)
+                success: function(response) {
+                    console.log(response);
+                    $('#product_name').val(response.ProductName);
+                    $('#jenis_kelamin').val(response.Gender);
+                    $('#price').val(response.Price_INR);
+                    $('#description').val(response.Description);
+                },
+                error: function(xhr) {
+                    console.log(xhr.responseText);
+                }
+            });
+        }
+    }
+
+    $(document).ready(function(){
+        $('#jenis_pakaian, #merk_product, #warna').on('change', fetchPredictionIfComplete);
+    });
+
     function previewImg() {
         const fotoIn = document.querySelector('#inputFoto');
         const preview = document.querySelector('.preview');
@@ -89,5 +141,33 @@
         oFReader.onload = function(oFREvent) {
             preview.src = oFREvent.target.result;
         }
-    }
+    }
+
+    $(document).ready(function(){
+    $('#merk-product, #warna').on('change', function() {
+        var merk = $('#merk-product').val();
+        var warna = $('#warna').val();
+
+        if (merk && warna) {
+            $.ajax({
+                url: '/predict-Gender',
+                method: 'POST',
+                data: {
+                    merk: merk,
+                    warna: warna,
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(response) {
+                    console.log(response);
+                    $('#jenis-kelamin').val(response.gender); // isi otomatis
+                },
+                error: function(xhr) {
+                    console.log(xhr.responseText);
+                }
+            });
+        }
+    });
+});
 </script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+

@@ -18,11 +18,19 @@ class ProductFactory extends Factory
     public function definition(): array
     {
         return [
-            'sku'               => Str::random(10),
-            'nama_product'      => fake()->name(),
-            'type'              => "Celana",
-            'kategory'          => "Pria",
-            'harga'             => 100000,
+            'product_id'        => Str::random(10),
+            'product_name'      => fake()->name(),
+            'product_brand'     => "Raymond",
+            'gender'            => "men",
+            'price'             => 100000,
+            'description'       => fake()->paragraph(),
+            'primary_color'     => fake()->randomElement([
+                                        'T-Shirt', 'Shirt', 'Blouse', 'Jacket', 'Hoodie', 'Sweater',
+                                        'Jeans', 'Trousers', 'Shorts', 'Skirt',
+                                        'Dress', 'Tunic', 'Outerwear', 'Cardigan', 'Pajamas', 'Set Outfit'
+                                    ]),
+
+            'jenis_pakaian'     => fake()->randomElement(['']),
             'quantity'          => 10,
             'discount'          => 10 / 100,
             'is_active'         => 1,
