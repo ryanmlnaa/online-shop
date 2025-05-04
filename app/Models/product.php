@@ -11,11 +11,14 @@ class Product extends Model
     protected $table = 'products';
     public $timestamps = true;
     protected $fillable = [
-        'sku',
-        'nama_product',
-        'type',
-        'kategory',
-        'harga',
+        'product_id',
+        'product_name',
+        'product_brand',
+        'gender',
+        'price',
+        'description',
+        'primary_color',
+        'jenis_pakaian',
         'discount',
         'quantity',
         'foto',

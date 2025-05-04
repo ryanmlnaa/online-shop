@@ -26,10 +26,14 @@
                         <td>No</td>
                         <td>Foto</td>
                         <td>Date in</td>
-                        <td>SKU</td>
-                        <td>Product Name</td>
-                        <td>Category</td>
-                        <td>Price</td>
+                        <td>Kode Product</td>
+                        <td>Nama Product</td>
+                        <td>Merk Product</td>
+                        <td>Jenis Kelamin</td>
+                        <td>Harga</td>
+                        <td>Deskripsi</td>
+                        <td>Warna</td>
+                        <td>Jenis Pakaian</td>
                         <td>Stock</td>
                         <td>#</td>
                     </tr>
@@ -42,13 +46,17 @@
                             <img src="{{ asset('storage/product/' . $x->foto) }}" style="width:100px;">
                         </td>
                         <td>{{ $x->created_at }}</td>
-                        <td>{{ $x->sku }}</td>
-                        <td>{{ $x->nama_product }}</td>
-                        <td>{{ $x->type . ' ' . $x->kategory }}</td>
-                        <td>{{ $x->harga }}</td>
+                        <td>{{ $x->product_id }}</td>
+                        <td>{{ $x->product_name }}</td>
+                        <td>{{ $x->product_brand }}</td>
+                        <td>{{ $x->gender}}</td>
+                        <td>{{ $x->price }}</td>
+                        <td>{{ $x->description }}</td>
+                        <td>{{ $x->primary_color}}</td>
+                        <td>{{ $x->jenis_pakaian}}</td>
                         <td>{{ $x->quantity }}</td>
                         <td>
-                            <input type="hidden" id="sku" value="{{ $x->sku }}">
+                            <input type="hidden" id="sku" value="{{ $x->product_id }}">
                             <button class="btn btn-info editModal" data-id="{{ $x->id }}">
                                 <i class="fas fa-edit"></i>
                             </button>
@@ -81,7 +89,7 @@
         });
 
         $('#addData').click(function (e) {
-            
+
             $.ajax({
                 url: "{{route('addModal')}}",
                 success: function (response) {

@@ -8,6 +8,11 @@ use App\Http\Requests\UpdateproductRequest;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\View;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Http\Request;
+use Symfony\Component\Process\Process;
+use Symfony\Component\Process\Exception\ProcessFailedException;
+use Illuminate\Support\Facades\Http;
+
 
 class ProductController extends Controller
 {
@@ -31,7 +36,7 @@ class ProductController extends Controller
     {
         return view('admin/modal/addModal', [
             'title' => 'Tambah Data Product',
-            'sku'   => 'BRG' . rand(10000, 99999),
+            'product_id'   => 'BRG' . rand(10000, 99999),
         ]);
     }
 
@@ -41,14 +46,17 @@ class ProductController extends Controller
     public function store(StoreproductRequest $request)
     {
         $data = new product;
-        $data->sku          = $request->sku;
-        $data->nama_product = $request->nama;
-        $data->type         = $request->type;
-        $data->kategory     = $request->kategori;
-        $data->harga        = $request->harga;
-        $data->quantity     = $request->quantity;
-        $data->discount     = 10 / 100;
-        $data->is_active    = 1;
+        $data->product_id    = $request->product_id;
+        $data->product_name  = $request->product_name;
+        $data->product_brand = $request->product_brand;
+        $data->gender        = $request->gender;
+        $data->price         = $request->price;
+        $data->description   = $request->description;
+        $data->primary_color = $request->primary_color;
+        $data->jenis_pakaian = $request->jenis_pakaian;
+        $data->quantity      = $request->quantity;
+        $data->discount      = 10 / 100;
+        $data->is_active     = 1;
 
         if ($request->hasFile('foto')) {
             $photo = $request->file('foto');
@@ -56,6 +64,8 @@ class ProductController extends Controller
             $photo->move(public_path('storage/product'), $filename);
             $data->foto = $filename;
         }
+
+        // dd($data);
         $data->save();
         Alert::toast('Data berhasil disimpan', 'success');
         return redirect()->route('product');
@@ -77,9 +87,32 @@ class ProductController extends Controller
         )->render();
     }
 
+
+    public function predictFromFlask(Request $request)
+    {
+        // dd($data);
+        $response = Http::withHeaders([
+            'x-api-key' => 'test-123',
+            'Content-Type' => 'application/json',
+        ])->post('http://127.0.0.1:5000/predict', [
+            'JenisPakaian'  => $request->input('jenis_pakaian'),
+            'ProductBrand'  => $request->input('product_brand'),
+            'PrimaryColor'  => $request->input('primary_color'),
+        ]);
+
+        dd($request);
+        if ($response->successful()) {
+            return response()->json($response->json());
+        } else {
+            return response()->json(['error' => 'Gagal prediksi'], 500);
+        }
+    }
+
+
     public function update(UpdateproductRequest $request, product $product, $id)
     {
         $data = product::findOrFail($id);
+        // dd($data);
 
         if ($request->file('foto')) {
             $photo = $request->file('foto');
@@ -91,18 +124,21 @@ class ProductController extends Controller
         }
 
         $field = [
-            'sku'                   => $request->sku,
-            'nama_product'          => $request->nama,
-            'type'                  => $request->type,
-            'kategory'              => $request->kategori,
-            'harga'                 => $request->harga,
+            'product_id'            => $request->product_id,
+            'product_name'          => $request->product_name,
+            'product_brand'         => $request->product_brand,
+            'gender'                => $request->gender,
+            'price'                 => $request->price,
+            'description'           => $request->description,
+            'primary_color'         => $request->primary_color,
+            'jenis_pakaian'         => $request->jenis_pakaian,
             'quantity'              => $request->quantity,
             'discount'              => 10 / 100,
             'is_active'             => 1,
             'foto'                  => $filename,
         ];
 
-        $data::where('id',$id)->update($field);
+        $data::where('product_id',$id)->update($field);
         Alert::toast('Data berhasil diupdate', 'success');
         return redirect()->route('product');
     }
@@ -121,4 +157,27 @@ class ProductController extends Controller
 
         echo json_encode($json);
     }
+
+    public function predictGender(Request $request)
+    {
+        $input = [
+            'ProductBrand' => $request->input('merk'),
+            'PrimaryColor' => $request->input('warna'),
+        ];
+
+        // Simpan input sementara jadi file JSON
+        $inputPath = public_path('python/input.json');
+        file_put_contents($inputPath, json_encode($input));
+
+        // Panggil python script untuk prediksi
+        $python = 'python'; // kalau di server Linux mungkin harus 'python3'
+        $scriptPath = public_path('python/predict.py');
+
+        $command = "$python $scriptPath";
+        $output = shell_exec($command);
+
+        return response()->json(['gender' => trim($output)]);
+    }
+
+
 }
