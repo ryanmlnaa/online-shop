@@ -100,19 +100,19 @@ class ProductController extends Controller
             'PrimaryColor'  => $request->input('primary_color'),
         ]);
 
-        dd($request);
+        // dd($request);
         if ($response->successful()) {
             return response()->json($response->json());
         } else {
             return response()->json(['error' => 'Gagal prediksi'], 500);
         }
     }
-
+      //  dd($data);
 
     public function update(UpdateproductRequest $request, product $product, $id)
     {
         $data = product::findOrFail($id);
-        // dd($data);
+
 
         if ($request->file('foto')) {
             $photo = $request->file('foto');
@@ -138,10 +138,10 @@ class ProductController extends Controller
             'foto'                  => $filename,
         ];
 
-        $data::where('product_id',$id)->update($field);
+        $data->update($field);
         Alert::toast('Data berhasil diupdate', 'success');
         return redirect()->route('product');
-    }
+     }
 
     /**
      * Remove the specified resource from storage.

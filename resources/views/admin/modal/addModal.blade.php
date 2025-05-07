@@ -31,14 +31,7 @@
                     <div class="mb-3 row">
                         <label for="gender" class="col-sm-5 col-form-label">Jenis Kelamin</label>
                         <div class="col-sm-7">
-                            <select class="form-control" id="jenis_kelamin" name="gender"> <!-- sebelumnya name="jenis_kelamin" -->
-                                <option value=""> Pilih Jenis Kelamin </option>
-                                <option value="Men">Men</option>
-                                <option value="Women">Women</option>
-                                <option value="Unisex">Unisex</option>
-                                <option value="Boys">Boys</option>
-                                <option value="Girls">Girls</option>
-                            </select>
+                            <input type="text" class="form-control" id="gender" name="gender">
                         </div>
                     </div>
                     <div class="mb-3 row">
@@ -93,11 +86,11 @@
 </div>
 <script>
      function fetchPredictionIfComplete() {
-        const pakaian = $('#jenis_pakaian').val();
+        const name = $('#jenis_pakaian').val();
         const brand = $('#merk_product').val();
         const color = $('#warna').val();
 
-        if (pakaian && brand && color) {
+        if (name && brand && color) {
             $.ajax({
                 url: '/predict-flask',
                 method: 'POST',
@@ -106,7 +99,7 @@
                     'X-CSRF-TOKEN': '{{ csrf_token() }}'
                 },
                 data: JSON.stringify({
-                    jenis_pakaian: pakaian,
+                    jenis_pakaian: name,
                     product_brand: brand,
                     primary_color: color
                 }),
