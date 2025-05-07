@@ -13,7 +13,7 @@ df = pd.read_csv("C:/laragon/www/online-shop/public/python/online_shop.csv")  # 
 
 # Kolom input & target
 input_cols = ['JenisPakaian', 'ProductBrand', 'PrimaryColor']
-target_cols = ['ProductName','Gender', 'Price (INR)', 'Description']
+target_cols = ['Gender', 'Price (INR)', 'Description']
 
 # Hapus baris kosong di kolom penting
 df = df.dropna(subset=input_cols + target_cols)
@@ -37,7 +37,7 @@ Y['Gender_enc'] = le_gender.fit_transform(Y['Gender'])
 Y['Description_enc'] = le_description.fit_transform(Y['Description'])
 
 # Target akhir
-Y_train = Y[['ProductName','Gender_enc', 'Price (INR)', 'Description_enc']]
+Y_train = Y[['Gender_enc', 'Price (INR)', 'Description_enc']]
 
 # Transform input
 X_transformed = preprocessor.fit_transform(X)

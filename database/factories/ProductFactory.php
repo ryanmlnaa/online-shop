@@ -24,13 +24,11 @@ class ProductFactory extends Factory
             'gender'            => "men",
             'price'             => 100000,
             'description'       => fake()->paragraph(),
-            'primary_color'     => fake()->randomElement([
-                                        'T-Shirt', 'Shirt', 'Blouse', 'Jacket', 'Hoodie', 'Sweater',
-                                        'Jeans', 'Trousers', 'Shorts', 'Skirt',
-                                        'Dress', 'Tunic', 'Outerwear', 'Cardigan', 'Pajamas', 'Set Outfit'
-                                    ]),
+            'primary_color'     => fake()->randomElement([]),
 
-            'jenis_pakaian'     => fake()->randomElement(['']),
+            'jenis_pakaian'     => fake()->randomElement(['T-Shirt', 'Shirt', 'Blouse', 'Jacket', 'Hoodie', 'Sweater',
+                                        'Jeans', 'Trousers', 'Shorts', 'Skirt',
+                                        'Dress', 'Tunic', 'Outerwear', 'Cardigan', 'Pajamas', 'Set Outfit']),
             'quantity'          => 10,
             'discount'          => 10 / 100,
             'is_active'         => 1,
