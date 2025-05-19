@@ -36,6 +36,7 @@
             <h1>Belum ada product ...!</h1>
         @else
             @foreach ($data as $p)
+            {{-- {{dd($p)}} --}}
                 <div class="card" style="width:220px;">
                     <div class="card-header m-auto" style="height:100%;width:100%;">
                         <img src="{{ asset('storage/product/' . $p->foto) }}" alt="Slingbag"
@@ -49,9 +50,14 @@
                     <div class="card-footer d-flex flex-row justify-content-between align-item-center">
                         <p class="m-0" style="font-size: 16px; font-weight: 600;"><span>IDR
                             </span>{{ number_format($p->price) }}</p>
-                        <button class="btn btn-outline-primary" style="font-size:24px">
-                            <i class="fa-solid fa-cart-plus"></i>
-                        </button>
+                        <form action="{{ route('addTocart', $p->id) }}" method="POST">
+                            <input type="text" value="{{$p->id}}" hidden name="id">
+                            @csrf
+                            <button type="submit" class="btn btn-outline-primary" style="font-size:24px">
+                                <i class="fa-solid fa-cart-plus"></i>
+                            </button>
+                        </form>
+
                     </div>
                 </div>
             @endforeach

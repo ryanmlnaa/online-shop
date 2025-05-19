@@ -2,10 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\transaksi;
+use App\Http\Requests\StoretransaksiRequest;
+use App\Http\Requests\UpdatetransaksiRequest;
+use App\Models\product;
+use App\Models\tblCart;
 use Illuminate\Http\Request;
-use App\Models\Product;
+use Illuminate\Support\Facades\Session;
+use RealRashid\SweetAlert\Facades\Alert;
 
-class transaksiController extends Controller
+class TransaksiController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,33 +20,53 @@ class transaksiController extends Controller
     {
         $best = product::where('quantity_out','>=',5)->get();
         $data = product::paginate(15);
+        $countKeranjang = tblCart::where(['idUser' => 'guest123', 'status' => 0])->count();
         return view('pelanggan.page.home', [
-            'title' => 'Home',
-            'data'  => $data,
-            'best'  => $best,
+            'title'     => 'Home',
+            'data'      => $data,
+            'best'      => $best,
+            'count'     => $countKeranjang,
         ]);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        //
+    public function addToCart(Request $request)
+{
+    $product_id = $request->id;
+    // dd($request);
+
+    $product = Product::find( $product_id);
+
+    if (!$product) {
+        return response()->json(['error' => 'Produk tidak ditemukan'], 404);
     }
+
+    $field = [
+        'idUser'     => 'guest123',
+        'product_id' => $product->id, // ini disimpan sebagai foreign key numerik
+        'qty'        => 1,
+        'price'      => $product->price,
+    ];
+
+    tblCart::create($field);
+
+    return redirect('/');
+}
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        //
-    }
+    // public function store(StoretransaksiRequest $request)
+    // {
+    //     //
+    // }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(transaksi $transaksi)
     {
         //
     }
@@ -48,7 +74,7 @@ class transaksiController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(transaksi $transaksi)
     {
         //
     }
@@ -56,16 +82,15 @@ class transaksiController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+    // public function update(UpdatetransaksiRequest $request, transaksi $transaksi)
+    // {
+    //     //
+    // }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(transaksi $transaksi)
     {
-        //
     }
 }
