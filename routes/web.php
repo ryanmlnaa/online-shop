@@ -19,6 +19,8 @@ use App\Http\Controllers\UserController;
 */
 
 Route::get('/', [TransaksiController::class, 'index'])->name('home');
+Route::POST('/addTocart', [TransaksiController::class, 'addTocart'])->name('addTocart');
+
 Route::get('/shop', [Controller::class, 'shop'])->name('shop');
 Route::get('/transaksi', [Controller::class, 'transaksi'])->name('transaksi');
 Route::get('/contact', [Controller::class, 'contact'])->name('contact');

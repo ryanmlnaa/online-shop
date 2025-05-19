@@ -11,15 +11,14 @@ class Transaksi extends Model
     protected $table = 'transkasis';
     public $timestamps = true;
     protected $fillable = [
-       'code_transaksi',
-       'sku_transaksi',
-       'total_qty',
-       'total_harga',
-       'nama_customer',
-       'alamat',
-       'no_tlp',
-       'ekspedisi',
+        'code_transaksi',
+        'sku_transaksi',
+        'total_qty',
+        'total_harga',
+        'nama_customer',
+        'alamat',
+        'no_tlp',
+        'ekspedisi',
     ];
     protected $hidden;
-
 }
