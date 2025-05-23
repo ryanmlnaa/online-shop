@@ -23,12 +23,15 @@ Route::POST('/addTocart', [TransaksiController::class, 'addTocart'])->name('addT
 
 Route::get('/shop', [Controller::class, 'shop'])->name('shop');
 Route::get('/transaksi', [Controller::class, 'transaksi'])->name('transaksi');
-Route::get('/contact', [Controller::class, 'contact'])->name('contact');
+Route::get('/contact', [TransaksiController::class, 'prosesCheckout'])->name('contact');
+
 Route::get('/checkout', [Controller::class, 'checkout'])->name('checkout');
+Route::POST('/checkout/proses/{id}', [Controller::class, 'prosesCheckout'])->name('checkout.product');
+
 Route::get('/admin', [Controller::class, 'login'])->name('login');
 Route::POST('/admin/loginProses', [Controller::class, 'loginProses'])->name('loginProses');
 
-Route::group(['middleware' => 'admin'], function(){
+Route::group(['middleware' => 'admin'], function () {
     Route::get('/admin/dashboard', [Controller::class, 'admin'])->name('admin');
     Route::get('/admin/product', [ProductController::class, 'index'])->name('product');
     Route::get('/admin/logout', [Controller::class, 'logout'])->name('logout');
@@ -49,5 +52,7 @@ Route::group(['middleware' => 'admin'], function(){
     Route::post('/predict-Gender', [ProductController::class, 'predictGender']);
 
     Route::post('/predict-flask', [ProductController::class, 'predictFromFlask']);
+
+    Route::GET('/admin/transaksi', [TransaksiAdminController::class, 'index'])->name('transaksi.admin');
 
 });

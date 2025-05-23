@@ -20,5 +20,5 @@ class tblCart extends Model
     public function product()
     {
         return $this->hasOne(product::class, 'id', 'product_id');
-}
+    }
 }
