@@ -27,7 +27,9 @@
                             <a href= "/transaksi" class="fs-5 nav-link">
                                 <i class="fa fa-bag-shopping"></i>
                             </a>
+                            @if ($count)
                             <div class="circle">{{$count}}</div>
+                            @endif
                         </div>
                     </li>
                 </ul>

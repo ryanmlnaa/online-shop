@@ -32,36 +32,38 @@ class TransaksiController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function addToCart(Request $request)
-{
-    $product_id = $request->id;
-    // dd($request);
+   public function addToCart(Request $request)
+    {
+        $product_id = $request->input('product_id');
 
-    $product = Product::find( $product_id);
+        $product = Product::find($product_id);
+        if (!$product) {
+            return back()->with('error', 'Produk tidak ditemukan.');
+        }
 
-    if (!$product) {
-        return response()->json(['error' => 'Produk tidak ditemukan'], 404);
+        $field = [
+            'idUser'     => 'guest123',
+            'product_id' => $product_id,
+            'qty'        => 1,
+            'price'      => $product->price, // Atau $product->harga sesuai nama field-nya
+        ];
+
+        tblCart::create($field); // Pastikan model tblCart sudah benar
+
+        return redirect('/');
     }
 
-    $field = [
-        'idUser'     => 'guest123',
-        'product_id' => $product->id, // ini disimpan sebagai foreign key numerik
-        'qty'        => 1,
-        'price'      => $product->price,
-    ];
+    
 
-    tblCart::create($field);
 
-    return redirect('/');
-}
 
     /**
      * Store a newly created resource in storage.
      */
-    // public function store(StoretransaksiRequest $request)
-    // {
-    //     //
-    // }
+    public function store(StoretransaksiRequest $request)
+    {
+        //
+    }
 
     /**
      * Display the specified resource.
@@ -82,15 +84,16 @@ class TransaksiController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    // public function update(UpdatetransaksiRequest $request, transaksi $transaksi)
-    // {
-    //     //
-    // }
+    public function update(UpdatetransaksiRequest $request, transaksi $transaksi)
+    {
+        //
+    }
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(transaksi $transaksi)
     {
+        //
     }
 }
