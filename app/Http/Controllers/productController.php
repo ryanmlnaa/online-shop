@@ -21,7 +21,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $data = Product::paginate(3);
+        $data = product::paginate(3);
         return view('admin.page.product', [
             'name'      => "Product",
             'title'     => 'Admin Product',
@@ -76,7 +76,7 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        $data = Product::findOrFail($id);
+        $data = product::findOrFail($id);
 
         return view(
             'admin.modal.editModal',
@@ -111,7 +111,7 @@ class ProductController extends Controller
 
     public function update(UpdateproductRequest $request, product $product, $id)
     {
-        $data = Product::findOrFail($id);
+        $data = product::findOrFail($id);
 
 
         if ($request->file('foto')) {
@@ -148,7 +148,7 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        $product = Product::findOrFail($id);
+        $product = product::findOrFail($id);
         $product->delete();
 
         $json = [

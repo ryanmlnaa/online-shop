@@ -49,13 +49,13 @@
                     <div class="mb-3 row">
                         <label for="primary_color" class="col-sm-5 col-form-label">Warna</label>
                         <div class="col-sm-7">
-                            <input type="text" class="form-control" id="warna" name="primary_color"> <!-- sebelumnya name="warna" -->
+                            <input type="text" class="form-control" id="primary_color" name="primary_color"> <!-- sebelumnya name="warna" -->
                         </div>
                     </div>
                     <div class="mb-3 row">
                         <label for="jenis_pakaian" class="col-sm-5 col-form-label">Jenis Pakaian</label>
                         <div class="col-sm-7">
-                            <input type="text" class="form-control" id="warna" name="jenis_pakaian"> <!-- sebelumnya name="warna" -->
+                            <input type="text" class="form-control" id="jenis_pakaian" name="jenis_pakaian"> <!-- sebelumnya name="warna" -->
                         </div>
                     </div>
                     <div class="mb-3 row">
@@ -87,8 +87,8 @@
 <script>
      function fetchPredictionIfComplete() {
         const name = $('#jenis_pakaian').val();
-        const brand = $('#merk_product').val();
-        const color = $('#warna').val();
+        const brand = $('#product_brand').val();
+        const color = $('#primary_color').val();
 
         if (name && brand && color) {
             $.ajax({
@@ -106,8 +106,8 @@
                 // dd($request)
                 success: function(response) {
                     console.log(response);
-                    $('#product_name').val(response.ProductName);
-                    $('#jenis_kelamin').val(response.Gender);
+                    // $('#product_name').val(response.ProductName);
+                    $('#gender').val(response.Gender);
                     $('#price').val(response.Price_INR);
                     $('#description').val(response.Description);
                 },
@@ -119,7 +119,7 @@
     }
 
     $(document).ready(function(){
-        $('#jenis_pakaian, #merk_product, #warna').on('change', fetchPredictionIfComplete);
+        $('#jenis_pakaian, #product_brand, #primary_color').on('change', fetchPredictionIfComplete);
     });
 
     function previewImg() {
@@ -163,4 +163,3 @@
 });
 </script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
