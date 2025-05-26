@@ -9,6 +9,7 @@ class modelDetailTransaksi extends Model
 {
     use HasFactory;
 
+    protected $table = 'detail-transaksis';
     public $timestamps = true;
     protected $fillable = [
         'id_transaksi',

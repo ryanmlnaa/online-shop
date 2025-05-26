@@ -3,16 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\modelDetailTransaksi;
-use App\Models\tblCart;
+use App\Models\TblCart;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request as HttpRequest;
 use Illuminate\Routing\Controller as BaseController;
-use Illuminate\Support\Facades\Request;
+// use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Product;
+use App\Models\transaksi;
 //
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -22,8 +24,8 @@ class Controller extends BaseController
 
     public function shop()
     {
-        $data = product::paginate(8);
-        $countKeranjang = tblCart::count();
+        $data = Product::paginate(8);
+        $countKeranjang = TblCart::count();
         return view('pelanggan.page.shop', [
             'title' => 'Shop',
             'data' => $data,
@@ -32,8 +34,8 @@ class Controller extends BaseController
     }
     public function transaksi()
     {
-        $db = tblCart::with('product')->where('idUser', 'guest123')->get();
-        $countKeranjang = tblCart::count();
+        $db = TblCart::with('product')->where('idUser', 'guest123')->get();
+        $countKeranjang = TblCart::count();
 
         // dd($db->product->product_name);
         return view('pelanggan.page.transaksi', [
@@ -44,7 +46,7 @@ class Controller extends BaseController
     }
     public function contact()
     {
-        $countKeranjang = tblCart::count();
+        $countKeranjang = TblCart::count();
         return view('pelanggan.page.contact', [
             'title' => 'Contact Us',
             'count' => $countKeranjang,
@@ -53,7 +55,7 @@ class Controller extends BaseController
 
     public function checkout()
     {
-        $countKeranjang = tblCart::count();
+        $countKeranjang = TblCart::count();
         return view('pelanggan.page.checkout', [
             'title' => 'Check Out',
             'count' => $countKeranjang,
@@ -61,14 +63,15 @@ class Controller extends BaseController
     }
     public function prosesCheckout(Request $request, $id)
     {
-        $data = $request->all();
-        $findId = tblCart::find($id);
-        $code = transaksi::count();
-        $codeTransaksi = random_int(000, 999) . date('Ymd') . $code;
+        $data   = $request->all();
+        $findId = TblCart::find($id);
+        $code   = Transaksi::count();
+        $codeTransaksi = random_int(000, 999).date('Ymd') . $code;
         // dd($data['product_id']);die;
 
         // simpan detail barang
         $detailTransaksi = new modelDetailTransaksi();
+        
         $fieldDetail = [
             'id_transaksi' => $codeTransaksi,
             'product_id' => $data['product_id'],

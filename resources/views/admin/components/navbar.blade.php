@@ -5,6 +5,12 @@
             {{-- <li class="breadcrumb-item active" aria-current="page">Library</li>--}}
         </ol>
         <span>{{$name}}</span>
+
+        <a href="{{ route('checkout') }}" class="btn btn-outline-light">
+    <i class="fas fa-shopping-cart"></i> Keranjang
+</a>
+
+
     </div>
     <div class="d-flex align-items-center gap-3">
         <div class="icon-notif">
