@@ -9,18 +9,26 @@
         }
     </style>
     <h3 class="mt-5 mb-5">Keranjang Belanja</h3>
-    @if (!$data)
+    @if (!$data || $data->isEmpty())
+        <div class="alert alert-info">
+            Keranjang Anda kosong.
+        </div> 
+        
     @else
         @foreach ($data as $x)
             <div class="card mb-3">
                 <div class="card-body d-flex gap-4">
                     <img src="{{ asset('storage/product/' . $x->product->foto) }}" width="300" alt="">
                     <form action="{{ route('checkout.product', ['id' => $x->id]) }}" method="POST">
+                        <div class="desc w-100"></div>
                         @csrf
                         <div class="desc w-100">
                             <p style="font-size:24px; font-weight:700;">{{ $x->product->product_name }}</p>
                             <input type="hidden" name="product_id" value="{{ $x->product->id }}">
-                            <input type="number" class="form-control border-0 fs-1" name="harga" id="harga"
+                            <input type="number" class="form-control border-0 fs-1" name="harga" readonly
+                            
+                            id="harga"
+                            
                                 value="{{ $x->product->price }}">
                             <div class="row mb-2">
                                 <label for="qty" class="col-sm-2 col-form-label fs-5">Quantity</label>

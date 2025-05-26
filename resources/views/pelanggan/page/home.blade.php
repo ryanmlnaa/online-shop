@@ -50,7 +50,7 @@
                     <div class="card-footer d-flex flex-row justify-content-between align-item-center">
                         <p class="m-0" style="font-size: 16px; font-weight: 600;"><span>IDR
                             </span>{{ number_format($p->price) }}</p>
-                        <form action="{{ route('addTocart', $p->id) }}" method="POST">
+                        <form action="{{ route('addToCart', $p->id) }}" method="POST">
                             <input type="text" value="{{$p->id}}" hidden name="id">
                             @csrf
                             <button type="submit" class="btn btn-outline-primary" style="font-size:24px">
@@ -69,6 +69,7 @@
                     {{ $data->links() }}
                 </div>
             </div>
+
     </div>
     @endif
 @endsection

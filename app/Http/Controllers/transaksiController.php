@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\transaksi;
+use App\Models\Transaksi;
 use App\Http\Requests\StoretransaksiRequest;
 use App\Http\Requests\UpdatetransaksiRequest;
-use App\Models\product;
-use App\Models\tblCart;
+use App\Models\Product;
+use App\Models\TblCart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\DB;
+
 
 class TransaksiController extends Controller
 {
@@ -18,9 +20,9 @@ class TransaksiController extends Controller
      */
     public function index()
     {
-        $best = product::where('quantity_out','>=',5)->get();
-        $data = product::paginate(15);
-        $countKeranjang = tblCart::where(['idUser' => 'guest123', 'status' => 0])->count();
+        $best = Product::where('quantity_out','>=',5)->get();
+        $data = Product::paginate(15);
+        $countKeranjang = TblCart::where(['idUser' => 'guest123', 'status' => 0])->count();
         return view('pelanggan.page.home', [
             'title'     => 'Home',
             'data'      => $data,
@@ -34,65 +36,96 @@ class TransaksiController extends Controller
      */
    public function addToCart(Request $request)
     {
+        //
+        $request->validate([
+            'product_id' => 'required|exists:products,id'
+        ]);
+
+        // $db = new TblCart ;
+        // $product = Product::find($product_id);
+        // $field = [
+        //     'idUser'    => 'guest123',
+        //     'id_barang' => $product_id,
+        //     'qty'       => 1,
+        //     'price'     => $product->harga,
+        // ];
+        // $db::create($field);
+        // return redirect('/');
+        
         $product_id = $request->input('product_id');
-
         $product = Product::find($product_id);
-        if (!$product) {
-            return back()->with('error', 'Produk tidak ditemukan.');
-        }
 
-        $field = [
-            'idUser'     => 'guest123',
-            'product_id' => $product_id,
-            'qty'        => 1,
-            'price'      => $product->price, // Atau $product->harga sesuai nama field-nya
-        ];
+    //
+        // Simulasi user guest
+    $idUser = 'guest123';
 
-        tblCart::create($field); // Pastikan model tblCart sudah benar
+    // Cek apakah produk sudah ada di keranjang
+    $existingCart = TblCart::where('idUser', $idUser)
+        ->where('product_id', $product_id)
+        ->where('status', 0) // Belum checkout
+        ->first();
 
-        return redirect('/');
+    if ($existingCart) {
+    $newQty = $existingCart->qty + 1;
+
+    $existingCart->update([
+        'qty'   => $newQty,
+        'price' => $newQty * $product->price
+    ]);
+} else {
+    TblCart::create([
+        'idUser'     => $idUser,
+        'product_id' => $product_id,
+        'qty'        => 1,
+        'price'      => $product->price,
+        'status'     => 0
+    ]);
     }
 
+    Alert::success('Sukses', 'Produk berhasil ditambahkan ke keranjang!');
+    return redirect('/shop');
+}
+//
+    
+    public function checkout()
+    {
+        $keranjang = TblCart::with('product')
+            ->where('idUser', 'guest123')
+            ->where('status', 0)
+            ->get();
+
+        return view('pelanggan.page.check-out', [
+            'keranjang' => $keranjang,
+            'title' => 'Checkout'
+        ]);
+    }
     
 
 
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoretransaksiRequest $request)
+    public function store(StoreTransaksiRequest $request)
     {
         //
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(transaksi $transaksi)
+    
+    public function show(Transaksi $transaksi)
+    {
+        
+    }
+
+    
+    public function edit(Transaksi $transaksi)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(transaksi $transaksi)
+    public function update(UpdateTransaksiRequest $request, Transaksi $transaksi)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdatetransaksiRequest $request, transaksi $transaksi)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(transaksi $transaksi)
+    
+    public function destroy(Transaksi $transaksi)
     {
         //
     }

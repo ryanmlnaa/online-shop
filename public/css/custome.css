@@ -23,7 +23,7 @@ main {
     top: -1px;
     right: -5px;
     border-radius: 50%;
-    background-color: red;
+    background-color: rgba(249, 32, 32, 0.86);
     color: white;
     text-align: center;
     font-size: 12px;
