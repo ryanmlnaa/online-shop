@@ -63,29 +63,32 @@ class Controller extends BaseController
     }
     public function prosesCheckout(Request $request, $id)
     {
-        $data   = $request->all();
-        $findId = TblCart::find($id);
-        $code   = Transaksi::count();
-        $codeTransaksi = random_int(000, 999).date('Ymd') . $code;
+        $data = $request->all();
+        $findId = tblCart::find($id);
+        $code = transaksi::count();
+        $codeTransaksi = random_int(000, 999) . date('Ymd') . $code;
         // dd($data['product_id']);die;
 
         // simpan detail barang
         $detailTransaksi = new modelDetailTransaksi();
-        
+
         $fieldDetail = [
-            'id_transaksi' => $codeTransaksi,
-            'product_id' => $data['product_id'],
-            'qty' => $data['qty'],
-            'price' => $data['total']
+            'id_transaksi'  => $codeTransaksi,
+            'product_id'    => $data['product_id'],
+            'qty'           => $data['qty'],
+            'price'         => $data['total']
         ];
         $detailTransaksi::create($fieldDetail);
 
         // update cart
         $fieldCart = [
-            'qty' => $data['qty'],
+            'qty'   => $data['qty'],
             'price' => $data['total']
         ];
-        $findId::save($fieldCart);
+        TblCart::where('id',$id)->update($fieldCart);
+
+        Alert::toast('Checkout Berhasil', 'success');
+        return redirect()->route('checkout');
     }
 
     public function admin()

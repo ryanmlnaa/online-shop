@@ -12,8 +12,8 @@ return new class extends Migration
     public function up()
     {
         Schema::create('transaksis', function (Blueprint $table) {
-            $table->id(); 
-            $table->bigInteger('code_transaksi')->unsigned()->unique(); 
+            $table->id();
+            $table->bigInteger('code_transaksi')->unsigned()->unique();
             $table->string('sku_transaksi');
             $table->string('total_qty');
             $table->string('total_harga');
@@ -24,7 +24,7 @@ return new class extends Migration
             $table->timestamps();
         });
     }
-    
+
 
     /**
      * Reverse the migrations.

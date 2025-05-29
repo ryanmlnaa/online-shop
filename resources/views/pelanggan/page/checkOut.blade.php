@@ -52,48 +52,14 @@
                     <div class="card-header text-center p-4">
                         <h3>Total Belanja</h3>
                     </div>
-
-                    {{-- - --}}
-                        <div class="card mb-3">
-    <div class="card-header">
-        <h5>Produk dalam Keranjang</h5>
-    </div>
-    <div class="card-body">
-        @forelse($keranjang as $item)
-            <div class="border-bottom mb-2 pb-2">
-                
-            {{-- - --}}
-            <form action="{{ route('cart.updateQty') }}" method="POST" class="d-flex mb-2">
-    @csrf
-    <input type="hidden" name="cart_id" value="{{ $item->id }}">
-    <input type="number" name="qty" value="{{ $item->qty }}" min="1" class="form-control me-2" style="width: 70px;">
-    <button type="submit" class="btn btn-sm btn-primary">Update</button>
-</form>
-
-            {{-- <strong>{{ $item->product->product_name }}</strong><br>  --}}
-            
-            Qty: {{ $item->qty }} x {{ number_format($item->product->price) }} =
-                <strong>{{ number_format($item->qty * $item->product->price) }}</strong>
-            </div>
-        @empty
-            <p>Tidak ada barang di keranjang.</p>
-        @endforelse
-    </div>
-</div>
-{{-- - --}}
-                    
                     <div class="card-body pembayaran">
                         <h3 class="mb-3"></h3>
                         <input type="hidden" name="code" value="">
                         <div class="row mb-3">
                             <label for="totalBelanja" class="col-form-label col-sm-6">Total Belanja</label>
                             <div class="col-sm-6">
-                                
-                            <input type="number" class="form-control totalBelanja" id="totalBelanja" name="totalBelanja"
-                                    value="{{ $totalBelanja }}" readonly>
-
-                            {{-- <input type="number" class="form-control totalBelanja" id="totalBelanja"
-                                       name="totalBelanja" value="200000" readonly> --}}
+                                <input type="number" class="form-control totalBelanja" id="totalBelanja"
+                                       name="totalBelanja" value="200000" readonly>
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -101,7 +67,7 @@
                             <div class="col-sm-6">
                                     <input type="number" class="form-control discount" id="discount" name="discount"
                                         value="0">
-                            </div>      
+                            </div>
                         </div>
                         <div class="row mb-3">
                             <label for="PPn" class="col-form-label col-sm-6">PPn</label>
@@ -120,33 +86,22 @@
                         <div class="row mb-3">
                             <label for="dibayarkan" class="col-form-label col-sm-6">Total</label>
                             <div class="col-sm-6">
-                                
-                            <input type="number" class="form-control dibayarkan" id="dibayarkan" name="dibayarkan"
-                                    value="{{ $totalBelanja + 0 + 2200 }}" readonly>
-                            {{-- <input type="number" class="form-control dibayarkan" id="dibayarkan" name="dibayarkan"
-                                    value="0" readonly>  --}}
+                                <input type="number" class="form-control dibayarkan" id="dibayarkan" name="dibayarkan"
+                                    value="0" readonly>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="dibayarkan" class="col-form-label col-sm-6">Jumlah Barang</label>
                             <div class="col-sm-6">
-                                
-                            <input type="number" class="form-control dibayarkan" name="jumlahBarang"
-                                    value="{{ $jumlahBarang }}" readonly>
-
-                            {{-- <input type="number" class="form-control dibayarkan" id="dibayarkan"
-                                    name="jumlahBarang" value="" readonly> - --}}
+                                <input type="number" class="form-control dibayarkan" id="dibayarkan"
+                                    name="jumlahBarang" value="" readonly>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="dibayarkan" class="col-form-label col-sm-6">Total Quantity</label>
                             <div class="col-sm-6">
-                                
-                            <input type="number" class="form-control dibayarkan" name="totalQty"
-                                   value="{{ $totalQty }}" readonly>
-
-                            {{-- <input type="number" class="form-control dibayarkan" id="dibayarkan" name="totalQty"
-                                    value="" readonly> --}}
+                                <input type="number" class="form-control dibayarkan" id="dibayarkan" name="totalQty"
+                                    value="" readonly>
                             </div>
                         </div>
 

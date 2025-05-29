@@ -18,7 +18,7 @@ return new class extends Migration
             $table->String('product_brand');
             $table->String('gender');
             $table->BigInteger('price');
-            $table->String('description');
+            $table->longText('description');
             $table->String('primary_color');
             $table->String('jenis_pakaian');
             $table->Float('discount');
