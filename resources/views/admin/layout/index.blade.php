@@ -18,31 +18,28 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"
         integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
-        integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <title> Online Shop| {{ $title }}</title>
 </head>
 
 <body>
     <main>
-        <div class="d-flex flex-row">
-            <div class="col-sm-2">
-                @include('admin.components.sidebar')
+        <header>
+            @include('pelanggan.component.navbar')
+        </header>
+        <section>
+            <div class="container">
+                @yield('content')
             </div>
-            <div class="col-sm-10 mt-2">
-                <section>
-                    @include('admin.components.navbar')
-                    <article>
-                        @yield('content')
-                    </article>
-                </section>
+        </section>
+        <footer>
+            <div class="container">
+                @include('pelanggan.component.footer')
             </div>
-        </div>
+        </footer>
     </main>
-    @include('sweetalert::alert')
+
+    @include('pelanggan.modal.loginPelanggan')
+    @include('pelanggan.modal.registerPelanggan')
 </body>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
     integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
@@ -51,6 +48,4 @@
     integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous">
 </script>
 <script src="{{ asset('js/custom.js') }}"></script>
-<script src="{{ asset('vendor/sweetalert/sweetalert.all.js') }}"></script>
-
 </html>

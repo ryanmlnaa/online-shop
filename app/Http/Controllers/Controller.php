@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\modelDetailTransaksi;
-use App\Models\TblCart;
+use App\Models\tblCart;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request as HttpRequest;
@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Product;
+use App\Models\product;
 use App\Models\transaksi;
 //
 use RealRashid\SweetAlert\Facades\Alert;
