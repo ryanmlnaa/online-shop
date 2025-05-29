@@ -27,7 +27,7 @@ Route::get('/transaksi', [Controller::class, 'transaksi'])->name('transaksi');
 Route::get('/contact', [Controller::class, 'contact'])->name('contact');
 
 Route::get('/checkout', [Controller::class, 'checkout'])->name('checkout');
-Route::post('/checkout/proses/{id}', [Controller::class, 'prosesCheckout'])->name('checkout.product');
+Route::POST('/checkout/proses/{id}', [Controller::class, 'prosesCheckout'])->name('checkout.product');
 
 Route::get('/admin', [Controller::class, 'login'])->name('login');
 Route::post('/admin/loginProses', [Controller::class, 'loginProses'])->name('loginProses');
@@ -54,6 +54,6 @@ Route::group(['middleware' => 'admin'], function () {
 
     Route::post('/predict-flask', [ProductController::class, 'predictFromFlask']);
 
-    Route::get('/admin/transaksi', [TransaksiController::class, 'index'])->name('transaksi.admin');
+    Route::GET('/admin/transaksi', [TransaksiAdminController::class, 'index'])->name('transaksi.admin');
 
 });

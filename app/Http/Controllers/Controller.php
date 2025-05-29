@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\modelDetailTransaksi;
-use App\Models\TblCart;
+use App\Models\tblCart;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request as HttpRequest;
@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Product;
+use App\Models\product;
 use App\Models\transaksi;
 //
 use RealRashid\SweetAlert\Facades\Alert;
@@ -63,29 +63,32 @@ class Controller extends BaseController
     }
     public function prosesCheckout(Request $request, $id)
     {
-        $data   = $request->all();
-        $findId = TblCart::find($id);
-        $code   = Transaksi::count();
-        $codeTransaksi = random_int(000, 999).date('Ymd') . $code;
+        $data = $request->all();
+        $findId = tblCart::find($id);
+        $code = transaksi::count();
+        $codeTransaksi = random_int(000, 999) . date('Ymd') . $code;
         // dd($data['product_id']);die;
 
         // simpan detail barang
         $detailTransaksi = new modelDetailTransaksi();
-        
+
         $fieldDetail = [
-            'id_transaksi' => $codeTransaksi,
-            'product_id' => $data['product_id'],
-            'qty' => $data['qty'],
-            'price' => $data['total']
+            'id_transaksi'  => $codeTransaksi,
+            'product_id'    => $data['product_id'],
+            'qty'           => $data['qty'],
+            'price'         => $data['total']
         ];
         $detailTransaksi::create($fieldDetail);
 
         // update cart
         $fieldCart = [
-            'qty' => $data['qty'],
+            'qty'   => $data['qty'],
             'price' => $data['total']
         ];
-        $findId::save($fieldCart);
+        TblCart::where('id',$id)->update($fieldCart);
+
+        Alert::toast('Checkout Berhasil', 'success');
+        return redirect()->route('checkout');
     }
 
     public function admin()

@@ -36,7 +36,6 @@ class TransaksiController extends Controller
      */
    public function addToCart(Request $request)
     {
-        //
         $request->validate([
             'product_id' => 'required|exists:products,id'
         ]);
@@ -51,7 +50,7 @@ class TransaksiController extends Controller
         // ];
         // $db::create($field);
         // return redirect('/');
-        
+
         $product_id = $request->input('product_id');
         $product = Product::find($product_id);
 
@@ -86,7 +85,7 @@ class TransaksiController extends Controller
     return redirect('/shop');
 }
 //
-    
+
     public function checkout()
     {
         $keranjang = TblCart::with('product')
@@ -99,21 +98,17 @@ class TransaksiController extends Controller
             'title' => 'Checkout'
         ]);
     }
-    
-
 
     public function store(StoreTransaksiRequest $request)
     {
         //
     }
 
-    
     public function show(Transaksi $transaksi)
     {
-        
+
     }
 
-    
     public function edit(Transaksi $transaksi)
     {
         //
@@ -124,7 +119,6 @@ class TransaksiController extends Controller
         //
     }
 
-    
     public function destroy(Transaksi $transaksi)
     {
         //
